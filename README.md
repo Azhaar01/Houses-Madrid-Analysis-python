@@ -15,7 +15,7 @@ This project involves analyzing and predicting house prices in Madrid. The datas
 
 - **Objective**: The goal of this project is to analyze the data, identify patterns, and build prediction models that estimate house prices based on different features such as area, number of rooms, and location.
 
-## Data Analysis and Insights
+## Data Analysis
 
 The analysis includes the following steps:
 
