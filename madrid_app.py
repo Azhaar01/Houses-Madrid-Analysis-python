@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-from matplotlib import pyplot as plt
 import plotly.express as px
-import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 pd.options.display.float_format = '{:.2f}'.format
