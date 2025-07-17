@@ -10,7 +10,7 @@ import xgboost
 import joblib
 import streamlit as st
 
-df = pd.read_csv(r'C:\Users\Azhaa\Downloads\houses_Madrid.csv')
+df = pd.read_csv(r'houses_Madrid.csv')
 
 df = df[['id' ,'subtitle', 'sq_mt_built', 'n_rooms', 'n_bathrooms', 
          'buy_price', 'buy_price_by_area', 'has_parking']]
