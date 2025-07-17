@@ -62,7 +62,7 @@ model_features = joblib.load("features_list.pkl")
 
 st.title("🏠 Madrid Housing Price Predictor")
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox('Chooce a Page', ['Data','Overview','Prediction'])
+page = st.sidebar.selectbox('Select a Page', ['Data','Overview','Prediction'])
 
 if page == 'Data':
     st.subheader("Cleaned Dataset")
