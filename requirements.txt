@@ -7,4 +7,3 @@ matplotlib
 seaborn
 XGboost
 altair
-altair.vegalite.v4
