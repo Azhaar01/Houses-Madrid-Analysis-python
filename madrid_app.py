@@ -12,6 +12,8 @@ import streamlit as st
 
 df = pd.read_csv(r'houses_Madrid.csv')
 
+df = df.convert_dtypes().astype(object) 
+
 df = df[['id' ,'subtitle', 'sq_mt_built', 'n_rooms', 'n_bathrooms', 
          'buy_price', 'buy_price_by_area', 'has_parking']]
 
@@ -124,6 +126,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
