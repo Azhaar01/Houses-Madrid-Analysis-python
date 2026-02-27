@@ -69,8 +69,8 @@ page = st.sidebar.selectbox('Select a Page', ['Data','Overview','Prediction'])
 
 if page == 'Data':
     st.subheader("Cleaned Dataset")
-    st.dataframe(df)
-
+    st.dataframe(df[['District','sq_mt_built','n_rooms','n_bathrooms','buy_price','has_parking']])
+         
 elif page == 'Overview':
     st.subheader('Data Overview')
     pie = df['has_parking'].map({0: 'No', 1: 'Yes'})
@@ -125,6 +125,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
