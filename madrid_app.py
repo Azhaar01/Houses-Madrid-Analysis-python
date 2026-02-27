@@ -22,7 +22,7 @@ df.drop(df.index[df.n_rooms == 0], axis= 0, inplace= True)
 df['n_bathrooms'] = df['n_bathrooms'].astype(int)
 
 df['id'] = df.index
-df.drop(columns= 'id', axis=1, inplace=True)
+df.drop(columns= 'id', inplace=True)
 
 df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
 
@@ -122,3 +122,4 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
