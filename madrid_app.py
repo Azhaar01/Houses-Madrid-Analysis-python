@@ -23,6 +23,9 @@ df['n_bathrooms'] = df['n_bathrooms'].astype(int)
 
 for col in df.select_dtypes(include=['object']):
     df[col] = df[col].astype(str)
+
+for col in df.select_dtypes(include=['object']):
+    df[col] = df[col].str[:150]
          
 df['id'] = df.index
 df.drop(columns= 'id', inplace=True)
@@ -125,6 +128,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
