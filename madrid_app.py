@@ -12,8 +12,6 @@ import streamlit as st
 
 df = pd.read_csv(r'houses_Madrid.csv')
 
-df = df.convert_dtypes().astype(object) 
-
 df = df[['id' ,'subtitle', 'sq_mt_built', 'n_rooms', 'n_bathrooms', 
          'buy_price', 'buy_price_by_area', 'has_parking']]
 
@@ -31,9 +29,6 @@ df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
 df = df.rename(columns= {'subtitle' : 'District'})
 
 df['has_parking'] = df['has_parking'].astype(int)
-
-for col in df.select_dtypes(include=['object']):
-    df[col] = df[col].apply(lambda x: str(x)[:150])
          
 df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
 
@@ -126,6 +121,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
