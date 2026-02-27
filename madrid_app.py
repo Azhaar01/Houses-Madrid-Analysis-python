@@ -20,8 +20,10 @@ df['n_bathrooms'] = df['n_bathrooms'].fillna(1)
 df.drop(df.index[df.n_rooms == 0], axis= 0, inplace= True)
 
 df['n_bathrooms'] = df['n_bathrooms'].astype(int)
-df['subtitle'] = df['subtitle'].astype(str)
 
+for col in df.select_dtypes(include=['object']):
+    df[col] = df[col].astype(str)
+         
 df['id'] = df.index
 df.drop(columns= 'id', inplace=True)
 
@@ -123,5 +125,6 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
