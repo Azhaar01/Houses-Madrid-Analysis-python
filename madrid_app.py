@@ -103,23 +103,31 @@ elif page == 'Overview':
 
 elif page == 'Prediction':
     st.write("Enter property details to estimate the price in Euros.")
-    # Data Input
+
+    # Inputs
     area = st.number_input("Area (sq. meters)", min_value=10, max_value=1000, value=100)
     rooms = st.number_input("Number of Rooms", min_value=1, max_value=24, value=3)
     baths = st.number_input("Number of Bathrooms", min_value=1, max_value=14, value=2)
-    district = st.selectbox("District", [col.replace("District_", "") for col in model_features if "District_" in col])
     parking = st.selectbox("Parking Available?", ["Yes", "No"])
 
-    input_data = np.zeros(len(model_features))
-    input_data[model_features.get_loc("sq_mt_built")] = area
-    input_data[model_features.get_loc("n_rooms")] = rooms
-    input_data[model_features.get_loc("n_bathrooms")] = baths
-    if f"District_{district}" in model_features:
-        input_data[model_features.get_loc(f"District_{district}")] = 1
-    if "has_parking" in model_features:
-        input_data[model_features.get_loc("has_parking")] = 1 if parking == "Yes" else 0
+    # District list من نفس أعمدة التدريب
+    district_cols = [col for col in model_features if col.startswith("District_")]
+    district_options = [col.replace("District_", "") for col in district_cols]
+    district = st.selectbox("District", district_options)
+
+    # إنشاء DataFrame مطابق للتدريب
+    input_df = pd.DataFrame(np.zeros((1, len(model_features))), columns=model_features)
+
+    input_df["sq_mt_built"] = area
+    input_df["n_rooms"] = rooms
+    input_df["n_bathrooms"] = baths
+    input_df["has_parking"] = 1 if parking == "Yes" else 0
+
+    district_col_name = f"District_{district}"
+    if district_col_name in input_df.columns:
+        input_df[district_col_name] = 1
 
     # Prediction
     if st.button("Predict Price 💰"):
-        prediction = XGR.predict([input_data])[0]
+        prediction = XGR.predict(input_df)[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
