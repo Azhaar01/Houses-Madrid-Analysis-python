@@ -32,8 +32,7 @@ df['has_parking'] = df['has_parking'].astype(int)
          
 df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
 
-df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_')
-df1.columns = df1.columns.str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
+df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_').str.replace('ó', 'o').str.replace('í', 'i').str.replace('ñ', 'n').str.replace('Á', 'A').str.replace('á', 'a')
 
 x = df1.drop(columns=['buy_price', 'buy_price_by_area', 'id'])
 y = df1['buy_price'].values
