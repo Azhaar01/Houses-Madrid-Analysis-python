@@ -29,10 +29,14 @@ df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
 df = df.rename(columns= {'subtitle' : 'District'})
 
 df['has_parking'] = df['has_parking'].astype(int)
-         
+
+df['subtitle'] = df['subtitle'].str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
+df['subtitle'] = df['subtitle'].str.replace(' ', '_').str.replace('-', '_')
+df = df.rename(columns={'subtitle': 'District'})
+
 df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
 
-df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_').str.replace('ó', 'o').str.replace('í', 'i').str.replace('ñ', 'n').str.replace('Á', 'A').str.replace('á', 'a')
+df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_')
 
 x = df1.drop(columns=['buy_price', 'buy_price_by_area'])
 y = df1['buy_price'].values
@@ -122,6 +126,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
