@@ -24,19 +24,15 @@ df['n_bathrooms'] = df['n_bathrooms'].astype(int)
 df['id'] = df.index
 df.drop(columns= 'id', inplace=True)
 
-#df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
+df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
 
-#df = df.rename(columns= {'subtitle' : 'District'})
+df = df.rename(columns= {'subtitle' : 'District'})
 
 df['has_parking'] = df['has_parking'].astype(int)
 
-df['subtitle'] = df['subtitle'].str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
-df['subtitle'] = df['subtitle'].str.replace(' ', '_').str.replace('-', '_')
 df = df.rename(columns={'subtitle': 'District'})
 
 df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
-
-df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_')
 
 x = df1.drop(columns=['buy_price', 'buy_price_by_area'])
 y = df1['buy_price'].values
@@ -110,7 +106,7 @@ elif page == 'Prediction':
     area = st.number_input("Area (sq. meters)", min_value=10, max_value=1000, value=100)
     rooms = st.number_input("Number of Rooms", min_value=1, max_value=24, value=3)
     baths = st.number_input("Number of Bathrooms", min_value=1, max_value=14, value=2)
-    district = st.selectbox("District", [col.replace("District_", "") for col in model_features if "District_" in col])
+    #district = st.selectbox("District", [col.replace("District_", "") for col in model_features if "District_" in col])
     parking = st.selectbox("Parking Available?", ["Yes", "No"])
 
     district_cols = [col for col in model_features if "District_" in col]
@@ -132,6 +128,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
