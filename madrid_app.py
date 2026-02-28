@@ -110,12 +110,10 @@ elif page == 'Prediction':
     baths = st.number_input("Number of Bathrooms", min_value=1, max_value=14, value=2)
     parking = st.selectbox("Parking Available?", ["Yes", "No"])
 
-    # District list من نفس أعمدة التدريب
     district_cols = [col for col in model_features if col.startswith("District_")]
     district_options = [col.replace("District_", "") for col in district_cols]
     district = st.selectbox("District", district_options)
 
-    # إنشاء DataFrame مطابق للتدريب
     input_df = pd.DataFrame(np.zeros((1, len(model_features))), columns=model_features)
 
     input_df["sq_mt_built"] = area
@@ -131,3 +129,4 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict(input_df)[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
