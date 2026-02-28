@@ -24,9 +24,9 @@ df['n_bathrooms'] = df['n_bathrooms'].astype(int)
 df['id'] = df.index
 df.drop(columns= 'id', inplace=True)
 
-df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
+#df['subtitle'] = df['subtitle'].str.split(',', expand= True)[0]
 
-df = df.rename(columns= {'subtitle' : 'District'})
+#df = df.rename(columns= {'subtitle' : 'District'})
 
 df['has_parking'] = df['has_parking'].astype(int)
 
@@ -126,6 +126,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
