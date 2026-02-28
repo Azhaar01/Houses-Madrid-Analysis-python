@@ -32,6 +32,8 @@ df['has_parking'] = df['has_parking'].astype(int)
          
 df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
 
+df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_').str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
+
 x = df1.drop(columns=['buy_price'])
 y = df1['buy_price'].values
 
@@ -120,6 +122,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
