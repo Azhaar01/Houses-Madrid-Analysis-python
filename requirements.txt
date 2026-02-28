@@ -7,4 +7,4 @@ matplotlib
 seaborn
 XGboost
 altair==4.2.2
-pyarrow==14.0.2
+pyarrow==13.0.0
