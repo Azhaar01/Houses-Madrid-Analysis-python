@@ -100,27 +100,22 @@ elif page == 'Overview':
     fig4.update_layout(showlegend=False, bargap=0.4) 
     st.plotly_chart(fig4)
 
+
 elif page == 'Prediction':
     st.write("Enter property details to estimate the price in Euros.")
     # Data Input
     area = st.number_input("Area (sq. meters)", min_value=10, max_value=1000, value=100)
     rooms = st.number_input("Number of Rooms", min_value=1, max_value=24, value=3)
     baths = st.number_input("Number of Bathrooms", min_value=1, max_value=14, value=2)
-    #district = st.selectbox("District", [col.replace("District_", "") for col in model_features if "District_" in col])
+    district = st.selectbox("District", [col.replace("District_", "") for col in model_features if "District_" in col])
     parking = st.selectbox("Parking Available?", ["Yes", "No"])
 
-    district_cols = [col for col in model_features if "District_" in col]
-    district_options = [col.replace("District_", "") for col in district_cols]
-    district = st.selectbox("District", district_options)
-
-    input_df = pd.DataFrame(np.zeros((1, len(model_features))), columns=model_features)
+    input_data = np.zeros(len(model_features))
     input_data[model_features.get_loc("sq_mt_built")] = area
     input_data[model_features.get_loc("n_rooms")] = rooms
     input_data[model_features.get_loc("n_bathrooms")] = baths
-    district_col_name = f"District_{district}"
-    if district_col_name in input_df.columns:
-        input_df[district_col_name] = 1
-             
+    if f"District_{district}" in model_features:
+        input_data[model_features.get_loc(f"District_{district}")] = 1
     if "has_parking" in model_features:
         input_data[model_features.get_loc("has_parking")] = 1 if parking == "Yes" else 0
 
@@ -128,20 +123,3 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
