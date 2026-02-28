@@ -34,7 +34,7 @@ df1 = pd.get_dummies(df, columns=['District'], drop_first=True)
 
 df1.columns = df1.columns.str.replace(' ', '_').str.replace('-', '_').str.replace('ó', 'o').str.replace('í', 'i').str.replace('ñ', 'n').str.replace('Á', 'A').str.replace('á', 'a')
 
-x = df1.drop(columns=['buy_price', 'buy_price_by_area', 'id'])
+x = df1.drop(columns=['buy_price', 'buy_price_by_area'])
 y = df1['buy_price'].values
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
@@ -122,6 +122,7 @@ elif page == 'Prediction':
     if st.button("Predict Price 💰"):
         prediction = XGR.predict([input_data])[0]
         st.success(f"Estimated Price: **€{prediction:,.2f}**")
+
 
 
 
